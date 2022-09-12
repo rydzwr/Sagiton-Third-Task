@@ -3,37 +3,32 @@ package com.rydzwr.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.stream.Collectors;
 
-@WebServlet(name = "NameServlet", value = "/validator")
+@WebServlet(name = "NameServlet", value = "/api/v1/validator")
 public class NameServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        doPost(request, response);
-    }
-
-    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String name = request.getParameter("name");
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
+        String body = request.getReader().lines().collect(Collectors.joining("\n"));
+        JSONObject jsonObj = new JSONObject(body);
+        String name = jsonObj.getString("name");
 
-        if (name == null) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } else if (name.equals("hal")) {
-            request.getRequestDispatcher("/halView.jsp").forward(request, response);
-        } else if (name.equals("david")) {
-            request.getRequestDispatcher("/davidView.jsp").forward(request, response);
+        if (name.equals("Johny")) {
+            response.sendError(418, "I am a Teapot. You tried to use a teapot to brew coffee.");
+            return;
         }
-        else {
-            if (name.equals("Johny")) {
-                response.sendError(418, "Johny is not allowed name value");
-            } else {
-                out.println("Hello " + name);
-            }
-        }
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+
+        JSONObject res = new JSONObject();
+        res.put("name", name);
+        out.print(res.toString());
     }
 }
