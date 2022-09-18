@@ -1,5 +1,7 @@
 package com.rydzwr.controller;
 
+import com.rydzwr.model.Names;
+import com.rydzwr.model.Target;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
@@ -22,6 +24,14 @@ public class NameServlet extends HttpServlet {
         if (name.equals("Johny")) {
             response.sendError(418, "I am a Teapot. You tried to use a teapot to brew coffee.");
             return;
+        }
+
+        Names names = new Names();
+
+        try {
+            names.getClass().getDeclaredField("hal").isAnnotationPresent(Target.class);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
 
         PrintWriter out = response.getWriter();
