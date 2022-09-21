@@ -14,24 +14,18 @@ public class NameServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //TODO
+        // implement NameValidator to avoid digits and other shit in name
 
         String name = extractNameFromJson(request);
-
         response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
 
-        if (name.equals("Johny")) {
-            SendingService service = createService(new SendErrorStrategy());
-            service.send(response);
-        }
-
-        if (name.equals("hal") || name.equals("david")) {
-            SendingService service = createService(new SavedViewsStrategy());
-            service.send(out, response, name);
-
-        } else {
-            SendingService service = createService(new CommonNameStrategy());
-            service.send(out, response, name);
+        try {
+            SendMethodStrategy service = createService(name);
+            PrintWriter out = response.getWriter();
+            service.send(out, name);
+        } catch (Exception e) {
+            response.sendError(500, "Internal Server Error!");
         }
     }
 
@@ -41,7 +35,13 @@ public class NameServlet extends HttpServlet {
         return jsonObj.getString("value");
     }
 
-    private SendingService createService(SendMethodStrategy strategy) {
-        return new SendingService(strategy);
+    private SendMethodStrategy createService(String name) {
+        if (name.equals("Johny")) {
+            return new SendErrorStrategy();
+        } else if (name.equals("hal") || name.equals("david")) {
+            return new SavedViewsStrategy();
+        } else {
+            return new CommonNameStrategy();
+        }
     }
 }

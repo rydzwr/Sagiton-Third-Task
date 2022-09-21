@@ -13,7 +13,7 @@ public class SendErrorStrategy implements SendMethodStrategy {
     }
 
     @Override
-    public void send(HttpServletResponse response, PrintWriter out, String name) throws IOException {
+    public void send(PrintWriter out, String name) throws IOException {
 
     }
 }

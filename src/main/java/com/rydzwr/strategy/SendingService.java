@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class SendingService {
-    private SendMethodStrategy strategy;
+   /* private SendMethodStrategy strategy;
 
     public SendingService(SendMethodStrategy strategy) {
         this.strategy = strategy;
@@ -18,5 +18,5 @@ public class SendingService {
 
     public void send(PrintWriter out, HttpServletResponse response, String name) throws IOException {
         strategy.send(response, out,name);
-    }
+    }*/
 }

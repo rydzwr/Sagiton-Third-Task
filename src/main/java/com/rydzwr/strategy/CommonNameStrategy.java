@@ -13,7 +13,7 @@ public class CommonNameStrategy implements SendMethodStrategy {
     }
 
     @Override
-    public void send(HttpServletResponse response, PrintWriter out, String name) throws IOException {
+    public void send(PrintWriter out, String name) throws IOException {
         JSONObject res = new JSONObject();
         res.put("value", name);
         out.print(res);
