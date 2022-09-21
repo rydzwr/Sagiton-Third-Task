@@ -1,0 +1,6 @@
+com\rydzwr\filters\CORSInterceptor.class
+com\rydzwr\service\NameValidator.class
+com\rydzwr\service\StringEditor.class
+com\rydzwr\model\Target.class
+com\rydzwr\controller\NameServlet.class
+com\rydzwr\model\Names.class
