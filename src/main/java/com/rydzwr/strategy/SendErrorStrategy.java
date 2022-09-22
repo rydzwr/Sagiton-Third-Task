@@ -7,13 +7,7 @@ import java.io.PrintWriter;
 
 public class SendErrorStrategy implements SendMethodStrategy {
     @Override
-    public void send(HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+    public void send(HttpServletResponse response, String name) throws IOException {
         response.sendError(418, "I am a Teapot. You tried to use a teapot to brew coffee.");
-    }
-
-    @Override
-    public void send(PrintWriter out, String name) throws IOException {
-
     }
 }

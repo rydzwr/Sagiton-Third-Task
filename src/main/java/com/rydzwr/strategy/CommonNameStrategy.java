@@ -8,12 +8,8 @@ import java.io.PrintWriter;
 
 public class CommonNameStrategy implements SendMethodStrategy {
     @Override
-    public void send(HttpServletResponse response) {
-
-    }
-
-    @Override
-    public void send(PrintWriter out, String name) throws IOException {
+    public void send(HttpServletResponse response, String name) throws IOException {
+        PrintWriter out = response.getWriter();
         JSONObject res = new JSONObject();
         res.put("value", name);
         out.print(res);
