@@ -1,9 +1,6 @@
 package com.rydzwr.service;
 
-import com.rydzwr.strategy.CommonNameStrategy;
-import com.rydzwr.strategy.SavedViewsStrategy;
-import com.rydzwr.strategy.SendErrorStrategy;
-import com.rydzwr.strategy.SendMethodStrategy;
+import com.rydzwr.strategy.*;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
@@ -14,21 +11,13 @@ import static java.util.Arrays.asList;
 public class ServiceFactory {
     
     private static List<SendMethodStrategy> strategyList = asList(
-            new SendErrorStrategy(),
+            new SendEasterEggErrorStrategy(),
             new SavedViewsStrategy()
     );
     
     public SendMethodStrategy createService(String name) {
         if (name == null) {
-            return new SendErrorStrategy() {
-                public void send(HttpServletResponse response, String name) throws IOException {
-                    response.sendError(400, "Missing name parameter");
-                }
-
-                public boolean applies(String name) {
-                    return true;
-                }
-            };
+            return new SendErrorStrategy();
         }
         return strategyList
                 .stream()
